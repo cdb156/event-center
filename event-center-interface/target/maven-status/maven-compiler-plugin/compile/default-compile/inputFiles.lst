@@ -1,0 +1,8 @@
+/Users/shenxy/Documents/work/Renren/SourceCode/GitSrcScm/eap/rrtimes_scm/src/service/event-center/event-center-interface/src/main/java/com/rt/bc/eventcenter/itf/IEventConsumerBus.java
+/Users/shenxy/Documents/work/Renren/SourceCode/GitSrcScm/eap/rrtimes_scm/src/service/event-center/event-center-interface/src/main/java/com/rt/bc/eventcenter/itf/IEventProducer.java
+/Users/shenxy/Documents/work/Renren/SourceCode/GitSrcScm/eap/rrtimes_scm/src/service/event-center/event-center-interface/src/main/java/com/rt/bc/eventcenter/itf/IEventProducerBus.java
+/Users/shenxy/Documents/work/Renren/SourceCode/GitSrcScm/eap/rrtimes_scm/src/service/event-center/event-center-interface/src/main/java/com/rt/bc/eventcenter/itf/IEventCenterService.java
+/Users/shenxy/Documents/work/Renren/SourceCode/GitSrcScm/eap/rrtimes_scm/src/service/event-center/event-center-interface/src/main/java/com/rt/bc/eventcenter/itf/IEventConsumer.java
+/Users/shenxy/Documents/work/Renren/SourceCode/GitSrcScm/eap/rrtimes_scm/src/service/event-center/event-center-interface/src/main/java/com/rt/bc/eventcenter/annotation/Consumer.java
+/Users/shenxy/Documents/work/Renren/SourceCode/GitSrcScm/eap/rrtimes_scm/src/service/event-center/event-center-interface/src/main/java/com/rt/bc/eventcenter/util/EventNameUtil.java
+/Users/shenxy/Documents/work/Renren/SourceCode/GitSrcScm/eap/rrtimes_scm/src/service/event-center/event-center-interface/src/main/java/com/rt/bc/eventcenter/util/StringUtils.java
