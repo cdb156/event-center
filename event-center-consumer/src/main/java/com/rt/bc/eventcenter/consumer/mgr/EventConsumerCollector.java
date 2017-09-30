@@ -36,7 +36,7 @@ public class EventConsumerCollector implements BeanPostProcessor, ApplicationLis
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Consumer consumer = AnnotationUtils.findAnnotation(bean.getClass(), Consumer.class);
-        logger.warn("BeanPostProcessor:" + beanName);
+//        logger.warn("BeanPostProcessor:" + beanName);
         if (bean instanceof IEventConsumer && consumer != null) {
             Type[] types = bean.getClass().getGenericInterfaces();
 
