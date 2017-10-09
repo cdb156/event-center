@@ -2,6 +2,7 @@ package com.rt.bc.eventcenter.impl.storage;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.rt.bc.eventcenter.vo.EventInfo;
 import com.rt.bc.eventcenter.util.StringUtils;
 import org.springframework.stereotype.Component;
 

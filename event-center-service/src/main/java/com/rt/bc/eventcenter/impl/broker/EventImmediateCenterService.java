@@ -2,7 +2,7 @@ package com.rt.bc.eventcenter.impl.broker;
 
 import com.rt.bc.eventcenter.impl.EventConsumer;
 import com.rt.bc.eventcenter.impl.deliveryGuarantee.IDeliveryGuarantee;
-import com.rt.bc.eventcenter.impl.storage.EventInfo;
+import com.rt.bc.eventcenter.vo.EventInfo;
 import com.rt.bc.eventcenter.impl.storage.IEventStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

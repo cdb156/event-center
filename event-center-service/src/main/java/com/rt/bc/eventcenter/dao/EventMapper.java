@@ -1,6 +1,6 @@
 package com.rt.bc.eventcenter.dao;
 
-import com.rt.bc.eventcenter.impl.storage.EventInfo;
+import com.rt.bc.eventcenter.vo.EventInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,5 +17,5 @@ public interface EventMapper {
 
     int updateStatus(@Param("evetIdList") List<Long> eventIdList, @Param("status") int ordinal);
 
-    boolean createTable();
+    int createTable();
 }

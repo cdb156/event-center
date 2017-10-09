@@ -1,5 +1,7 @@
 package com.rt.bc.eventcenter.impl.storage;
 
+import com.rt.bc.eventcenter.vo.EventInfo;
+
 import java.util.List;
 
 /**

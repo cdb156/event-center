@@ -1,4 +1,4 @@
-package com.rt.bc.eventcenter.impl.storage;
+package com.rt.bc.eventcenter.vo;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  * 事件消息对象
  */
-public class EventInfo {
+public class EventInfo implements Serializable {
     // 消息状态
     public enum EventStatus {
         notSend(0),    //未发送

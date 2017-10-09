@@ -1,6 +1,6 @@
 package com.rt.bc.eventcenter.impl.deliveryGuarantee;
 
-import com.rt.bc.eventcenter.impl.storage.EventInfo;
+import com.rt.bc.eventcenter.vo.EventInfo;
 import com.rt.bc.eventcenter.impl.storage.IEventStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,9 @@
 package com.rt.bc.eventcenter.impl.storage;
 
 import com.rt.bc.eventcenter.dao.EventMapper;
+import com.rt.bc.eventcenter.vo.EventInfo;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * 使用mysql存储事件, 做持久化
  */
 @Component
-public class EventMySqlStorage implements IEventStorage, InitializingBean {
+public class EventMysqlStorage implements IEventStorage, InitializingBean {
     @Autowired
     private EventMapper eventMapper;
 

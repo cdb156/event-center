@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rt.bc.eventcenter.dao.EventMapper">
-    <insert id="save" parameterType="com.rt.bc.eventcenter.impl.storage.EventInfo">
+    <insert id="save" parameterType="com.rt.bc.eventcenter.vo.EventInfo">
       insert into bc_message
         (
         `type`,
@@ -16,7 +16,7 @@
         )
     </insert>
 
-    <select id="queryById" parameterType="Long" resultMap="com.rt.bc.eventcenter.impl.storage.EventInfo">
+    <select id="queryById" parameterType="Long" resultMap="com.rt.bc.eventcenter.vo.EventInfo">
       select * from bc_message where id = #{id}
     </select>
 
@@ -31,7 +31,7 @@
     </update>
 
     <insert id="createTable">
-        create TABLE if not exists `bc_message`(
+        create TABLE IF NOT EXISTS `bc_message`(
         `id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'id',
         `type` varchar(50) not NULL COMMENT '消息类型/名称',
         `content` text DEFAULT NULL COMMENT '消息内容',
