@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -55,7 +56,8 @@ public class EventQueueStorage implements IEventStorage{
     }
 
     @Override
-    public boolean saveEventStatus(EventInfo.EventStatus status) {
+    public boolean saveEventStatus(List<Long> eventIdList, EventInfo.EventStatus status) {
+        //在发送的时候, 已经出栈了, 所以不用做什么
         return true;
     }
 }

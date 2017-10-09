@@ -10,11 +10,7 @@ import java.util.List;
  * 送达策略服务, 接口声明
  */
 public interface IDeliveryGuarantee {
-    void preSend(Long eventId, IEventStorage eventStorage);
+    void preSend(List<Long> eventIdList, List<String> eventJsonList);
 
-    void afterSend(Long eventId, IEventStorage eventStorage);
-
-    void preSend(String eventType, List<String> eventJsonList);
-
-    void afterSend(String eventType, List<String> eventJsonList);
+    void afterSend(List<Long> eventIdList, List<String> eventJsonList);
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by shenxy on 2017-9-28.
@@ -38,7 +39,7 @@ public class EventPatchCenterService implements IPatchCenterService {
     // TODO: 为了减少对当前系统的影响,也为了方便批量处理,暂时使用这种"定时批量"的方式; 后续可以使用LinkedBlockingQueue的阻塞机制, 每个事件实时处理
     @Scheduled(initialDelay = 30000, fixedRate = 3000)    //(cron="60/3 * * * * ?")
     public void eventProcessor() {
-        Map<String, List<String>> eventDtoMap = new HashMap<>();
+        Map<String, List<EventInfo>> eventDtoMap = new HashMap<>();
 
         //1. 获取当前队列里, 所有消息
         while (true) {
@@ -47,26 +48,34 @@ public class EventPatchCenterService implements IPatchCenterService {
                 break;
             }
 
-            List<String> eventJsonList = eventDtoMap.get(eventInfo.getEventType());
-            if (eventJsonList == null) {
-                eventJsonList = new ArrayList<>();
-                eventJsonList.add(eventInfo.getEventJson());
-                eventDtoMap.put(eventInfo.getEventType(), eventJsonList);
+            List<EventInfo> eventDtoList = eventDtoMap.get(eventInfo.getEventType());
+            if (eventDtoList == null) {
+                eventDtoList = new ArrayList<>();
+                eventDtoList.add(eventInfo);
+                eventDtoMap.put(eventInfo.getEventType(), eventDtoList);
             }
             else {
-                eventJsonList.add(eventInfo.getEventJson());
+                eventDtoList.add(eventInfo);
             }
         }
 
         //根据订阅情况, 处理所有消息
         for (String eventType : eventDtoMap.keySet()) {
-            List<String> eventJsonList = eventDtoMap.get(eventType);
+            List<EventInfo> eventDtoList = eventDtoMap.get(eventType);
+            List<Long> eventIdList = eventDtoList
+                    .stream()
+                    .map(EventInfo::getId)
+                    .collect(Collectors.toList());
+            List<String> eventJsonList = eventDtoList
+                    .stream()
+                    .map(EventInfo::getEventJson)
+                    .collect(Collectors.toList());
             //2. 记录获取消息
-            deliveryGuarantee.preSend(eventType, eventJsonList);
+            deliveryGuarantee.preSend(eventIdList, eventJsonList);
             //3. 发送消息
             eventConsumer.onBusEvent(eventType, eventJsonList);
             //4. 记录发送结果
-            deliveryGuarantee.afterSend(eventType, eventJsonList);
+            deliveryGuarantee.afterSend(eventIdList, eventJsonList);
 
         }
     }

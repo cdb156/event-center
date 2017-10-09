@@ -7,8 +7,6 @@ import com.rt.bc.eventcenter.impl.storage.IEventStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -32,10 +30,10 @@ public class EventImmediateCenterService implements IImmediateCenterService {
         //1. 保存消息
         EventInfo eventInfo = eventStorage.save(eventName, eventJson);
         //2. 记录获取消息
-        deliveryGuarantee.preSend(eventInfo.getId(), eventStorage);
+        deliveryGuarantee.preSend(Collections.singletonList(eventInfo.getId()), Collections.singletonList(eventJson));
         //3. 发送消息
         eventConsumer.onBusEvent(eventName, Collections.singletonList(eventJson));
         //4. 记录发送结果
-        deliveryGuarantee.afterSend(eventInfo.getId(), eventStorage);
+        deliveryGuarantee.afterSend(Collections.singletonList(eventInfo.getId()), Collections.singletonList(eventJson));
     }
 }

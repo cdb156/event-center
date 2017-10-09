@@ -1,5 +1,7 @@
 package com.rt.bc.eventcenter.impl.storage;
 
+import java.util.List;
+
 /**
  * Created by shenxy on 30/9/17.
  *
@@ -8,5 +10,5 @@ package com.rt.bc.eventcenter.impl.storage;
 public interface IEventStorage {
     EventInfo save(String eventName, String eventJson);
 
-    boolean saveEventStatus(EventInfo.EventStatus status);
+    boolean saveEventStatus(List<Long> eventIdList, EventInfo.EventStatus status);
 }
