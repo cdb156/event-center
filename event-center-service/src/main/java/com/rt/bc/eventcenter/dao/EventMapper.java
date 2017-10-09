@@ -15,7 +15,9 @@ public interface EventMapper {
 
     EventInfo queryById(@Param("id") Long id);
 
-    int updateStatus(@Param("evetIdList") List<Long> eventIdList, @Param("status") int ordinal);
+    int updateStatus(@Param("evetIdList") List<Long> eventIdList, @Param("status") int status);
 
     int createTable();
+
+    EventInfo queryLast();
 }

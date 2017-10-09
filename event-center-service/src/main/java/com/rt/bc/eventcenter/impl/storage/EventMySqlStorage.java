@@ -6,6 +6,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,14 +32,26 @@ public class EventMysqlStorage implements IEventStorage, InitializingBean {
     }
 
     @Override
-    public boolean changeStatus(List<Long> eventIdList, EventInfo.EventStatus status) {
-        return eventMapper.updateStatus(eventIdList, status.getValue()) > 0;
+    public boolean changeStatus(List<Long> eventIdList, Integer status) {
+        return eventMapper.updateStatus(eventIdList, status) > 0;
     }
 
     @Override
     public EventInfo poll() {
-        //TODO:
-        return null;
+        EventInfo eventInfo = eventMapper.queryLast();
+        if (eventInfo == null) {
+            return null;
+        }
+        if (changeStatus(Collections.singletonList(eventInfo.getId()), EventInfo.STATUS_SENDED)) {
+            return eventInfo;
+        }
+
+        try {
+            throw new Exception("获取最新一条消息并更新消息状态异常");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

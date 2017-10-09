@@ -12,7 +12,7 @@ import java.util.List;
 public interface IEventStorage {
     EventInfo save(String eventName, String eventJson);
 
-    boolean changeStatus(List<Long> eventIdList, EventInfo.EventStatus status);
+    boolean changeStatus(List<Long> eventIdList, Integer status);
 
     EventInfo poll();
 }

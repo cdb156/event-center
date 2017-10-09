@@ -52,7 +52,7 @@ public class EventNameUtil {
         try {
             cls = Class.forName(className);
         } catch (ClassNotFoundException e) {
-            logger.warn("EventNameUtil: The cls of this event is not founded.");
+            logger.warn("EventNameUtil: The cls of this event is not founded. className:" + className);
             return null;
         }
 

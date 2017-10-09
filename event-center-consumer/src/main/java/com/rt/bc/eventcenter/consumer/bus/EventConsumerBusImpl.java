@@ -34,6 +34,10 @@ public class EventConsumerBusImpl implements IEventConsumerBus {
 
         Class cls = EventNameUtil.parseEventObjClass(eventName);
 
+        if (cls == null) {
+            logger.warn("EventConsumerBusImpl--onBusEvent--clsName: Unrecognized eventName:" + eventName);
+            return;
+        }
 //        List dataList = JsonUtil.parseArray(eventListJson, cls);
 //        List<Object> dataList = eventListJson
 //                .stream()

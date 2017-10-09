@@ -55,7 +55,7 @@ public class EventQueueStorage implements IEventStorage{
     }
 
     @Override
-    public boolean changeStatus(List<Long> eventIdList, EventInfo.EventStatus status) {
+    public boolean changeStatus(List<Long> eventIdList, Integer status) {
         //在发送的时候, 已经出栈了, 所以不用做什么
         return true;
     }

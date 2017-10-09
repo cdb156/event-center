@@ -19,7 +19,7 @@ public class AtMostOnceGuarantee implements IDeliveryGuarantee {
 
     @Override
     public void preSend(List<Long> eventIdList, List<String> eventJsonList) {
-        eventStorage.changeStatus(eventIdList, EventInfo.EventStatus.sended);
+        eventStorage.changeStatus(eventIdList, EventInfo.STATUS_SENDED);
     }
 
     @Override
