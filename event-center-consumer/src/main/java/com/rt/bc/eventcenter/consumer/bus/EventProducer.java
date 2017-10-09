@@ -34,4 +34,13 @@ public class EventProducer implements IEventProducer{
 
         eventProducerBus.postEvent(EventNameUtil.toEventName(eventType, eventBean), JsonUtil.toJSONString(eventBean));
     }
+
+    @Override
+    public void postEventSync(String eventType, Serializable eventBean) {
+        if (eventBean == null && StringUtils.isEmpty(eventType)) {
+            return;
+        }
+
+        eventProducerBus.postEventSync(EventNameUtil.toEventName(eventType, eventBean), JsonUtil.toJSONString(eventBean));
+    }
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by shenxy on 28/9/17.
@@ -27,12 +28,16 @@ public class EventConsumerBusImpl implements IEventConsumerBus {
     private EventConsumerMgr eventConsumerMgr;
 
     @Override
-    public void onBusEvent(String eventName, String eventListJson) {
+    public void onBusEvent(String eventName, List<String> eventListJson) {
         logger.warn("EventConsumerBusImpl--onBusEvent--clsName:" + eventName + ", eventListJson" + eventListJson + ", Thread:" + Thread.currentThread().hashCode());
 
         Class cls = EventNameUtil.parseEventObjClass(eventName);
 
-        List dataList = JsonUtil.parseArray(eventListJson, cls);
+//        List dataList = JsonUtil.parseArray(eventListJson, cls);
+        List dataList = eventListJson
+                .stream()
+                .map(eventJson -> JsonUtil.parseObject(eventJson, cls))
+                .collect(Collectors.toList());
         List<IEventConsumer> consumerList = eventConsumerMgr.getConsumer(eventName);
         if (consumerList != null && !consumerList.isEmpty()) {
             for (IEventConsumer consumer : consumerList) {

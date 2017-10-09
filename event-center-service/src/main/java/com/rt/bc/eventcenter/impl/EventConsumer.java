@@ -4,6 +4,8 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.rt.bc.eventcenter.itf.IEventConsumerBus;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by shenxy on 28/9/17.
  *
@@ -16,7 +18,7 @@ public class EventConsumer implements IEventConsumerBus {
     private IEventConsumerBus eventConsumerBus;
 
     @Override
-    public void onBusEvent(String eventName, String eventListJson) {
-        eventConsumerBus.onBusEvent(eventName, eventListJson);
+    public void onBusEvent(String eventName, List<String> eventJsonList) {
+        eventConsumerBus.onBusEvent(eventName, eventJsonList);
     }
 }

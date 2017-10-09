@@ -9,4 +9,6 @@ import java.io.Serializable;
  */
 public interface IEventProducerBus {
     void postEvent(String eventName, String eventJson);
+
+    void postEventSync(String eventName, String eventJson);
 }
