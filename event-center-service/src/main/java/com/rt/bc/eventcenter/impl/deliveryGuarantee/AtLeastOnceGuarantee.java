@@ -12,7 +12,7 @@ import java.util.List;
  *
  * 默认的消息送达策略 —— at most once
  */
-@Component
+//@Component //TODO:
 public class AtLeastOnceGuarantee implements IDeliveryGuarantee {
     @Autowired
     private IEventStorage eventStorage;

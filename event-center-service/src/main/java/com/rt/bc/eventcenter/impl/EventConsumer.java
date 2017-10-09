@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class EventConsumer implements IEventConsumerBus {
     //广播的方式, 给所有服务都发送
-    @Reference(cluster = "broadcast")
+    @Reference(cluster = "broadcast", lazy = true)
     private IEventConsumerBus eventConsumerBus;
 
     @Override

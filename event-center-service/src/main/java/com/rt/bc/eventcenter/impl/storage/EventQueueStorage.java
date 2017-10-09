@@ -14,7 +14,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  *
  * 事件队列管理
  */
-@Component
+//@Component //TODO:
 public class EventQueueStorage implements IEventStorage{
     private final static Logger logger = LoggerFactory.getLogger(EventQueueStorage.class);
 //    @Autowired
@@ -32,6 +32,7 @@ public class EventQueueStorage implements IEventStorage{
     //    take      移除并返回队列头部的元素      如果队列为空，则阻塞
     private LinkedBlockingQueue<EventInfo> eventQueue = new LinkedBlockingQueue<>();
 
+    @Override
     public EventInfo poll() {
         return eventQueue.poll();
     }

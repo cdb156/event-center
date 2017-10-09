@@ -13,4 +13,6 @@ public interface IEventStorage {
     EventInfo save(String eventName, String eventJson);
 
     boolean changeStatus(List<Long> eventIdList, EventInfo.EventStatus status);
+
+    EventInfo poll();
 }

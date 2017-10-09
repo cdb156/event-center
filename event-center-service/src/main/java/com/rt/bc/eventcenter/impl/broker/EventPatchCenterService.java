@@ -4,6 +4,7 @@ import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.rt.bc.eventcenter.impl.EventConsumer;
 import com.rt.bc.eventcenter.impl.deliveryGuarantee.IDeliveryGuarantee;
+import com.rt.bc.eventcenter.impl.storage.IEventStorage;
 import com.rt.bc.eventcenter.vo.EventInfo;
 import com.rt.bc.eventcenter.impl.storage.EventQueueStorage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class EventPatchCenterService implements IPatchCenterService {
     private final static Logger logger = LoggerFactory.getLogger(EventPatchCenterService.class);
 
     @Autowired
-    private EventQueueStorage eventQueueStorage;
+    private IEventStorage eventStorage;
 
     @Autowired
     private EventConsumer eventConsumer;
@@ -42,7 +43,7 @@ public class EventPatchCenterService implements IPatchCenterService {
 
         //1. 获取当前队列里, 所有消息
         while (true) {
-            EventInfo eventInfo = eventQueueStorage.poll();
+            EventInfo eventInfo = eventStorage.poll();
             if (eventInfo == null) {
                 break;
             }
@@ -82,6 +83,6 @@ public class EventPatchCenterService implements IPatchCenterService {
     @Override
     public void postEvent(String eventName, String eventJson) {
         //保存消息到队列
-        eventQueueStorage.save(eventName, eventJson);
+        eventStorage.save(eventName, eventJson);
     }
 }

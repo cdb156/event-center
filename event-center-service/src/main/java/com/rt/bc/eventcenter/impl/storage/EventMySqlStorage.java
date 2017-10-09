@@ -36,6 +36,12 @@ public class EventMysqlStorage implements IEventStorage, InitializingBean {
     }
 
     @Override
+    public EventInfo poll() {
+        //TODO:
+        return null;
+    }
+
+    @Override
     public void afterPropertiesSet() throws Exception {
         // 每次初始化都尝试创建, 要求createTable的sql可以重复执行
         eventMapper.createTable();

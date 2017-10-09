@@ -16,7 +16,7 @@
         )
     </insert>
 
-    <select id="queryById" parameterType="Long" resultMap="com.rt.bc.eventcenter.vo.EventInfo">
+    <select id="queryById" parameterType="Long" resultType="com.rt.bc.eventcenter.vo.EventInfo">
       select * from bc_message where id = #{id}
     </select>
 
