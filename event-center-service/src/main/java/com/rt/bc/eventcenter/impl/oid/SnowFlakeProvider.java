@@ -3,6 +3,7 @@ package com.rt.bc.eventcenter.impl.oid;
 import com.rt.bc.eventcenter.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
  * @Description: SnowFlake算法产生id
  * @author yxq
  */
+@Component
 public class SnowFlakeProvider implements IOidProvider {
     private final long workerId;
     private static final long twepoch = 0x1532af4e2ddL;

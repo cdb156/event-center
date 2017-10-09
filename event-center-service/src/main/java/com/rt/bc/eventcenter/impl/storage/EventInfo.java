@@ -10,9 +10,18 @@ import java.io.Serializable;
 public class EventInfo {
     // 消息状态
     public enum EventStatus {
-        notSend,    //未发送
-        sending,    //发送中
-        sended      //已发送
+        notSend(0),    //未发送
+        sending(1),    //发送中
+        sended(2);      //已发送
+
+        private int value;
+        EventStatus(int i) {
+            this.value = i;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 
     private Long id;
@@ -55,5 +64,13 @@ public class EventInfo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public EventStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(EventStatus status) {
+        this.status = status;
     }
 }
