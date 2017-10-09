@@ -4,7 +4,6 @@ import com.rt.bc.eventcenter.impl.storage.EventInfo;
 import com.rt.bc.eventcenter.impl.storage.IEventStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ public class AtMostOnceGuarantee implements IDeliveryGuarantee {
 
     @Override
     public void preSend(List<Long> eventIdList, List<String> eventJsonList) {
-        eventStorage.saveEventStatus(eventIdList, EventInfo.EventStatus.sended);
+        eventStorage.changeStatus(eventIdList, EventInfo.EventStatus.sended);
     }
 
     @Override

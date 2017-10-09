@@ -22,6 +22,6 @@ public class AtLeastOnceGuarantee implements IDeliveryGuarantee {
 
     @Override
     public void afterSend(List<Long> eventIdList, List<String> eventJsonList) {
-        eventStorage.saveEventStatus(eventIdList, EventInfo.EventStatus.sended);
+        eventStorage.changeStatus(eventIdList, EventInfo.EventStatus.sended);
     }
 }
