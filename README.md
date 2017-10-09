@@ -30,8 +30,34 @@
 
 # 二、使用方法:
 1) 消息接收
+```
+@Component
+@Consumer(eventType = "A")
+public class DemoEventConsumerA implements IEventConsumer<DemoEvent>, Serializable {
+    @Override
+    public void onEvent(List<DemoEvent> eventDtoList) {
+        System.out.println("DemoEventConsumerA--onEvent!");
+    }
+}
+```
 
 2) 消息发送
+```
+@Component
+@Service
+public class DemoServiceImpl implements IDemoService {
+    @Autowired
+    private IEventProducer eventProducer;
+
+    @Override
+    public String hi() {
+        eventProducer.postEvent("", new DemoEvent("aa", 11));
+
+        return "**hello**";
+    }
+}
+
+```
 
 3) 补充相关配置
 Dubbo配置, 增加配置项:
@@ -53,7 +79,31 @@ Mybatis配置, 增加配置项:
 
 Maven配置, 增加配置项(拷贝mapping.xml):
 ```
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <executions>
+        <execution>
+            <id>unpack</id>
+            <phase>generate-resources</phase>
+            <goals>
+                <goal>unpack</goal>
+            </goals>
+            <configuration>
+                <artifactItems>
+                    <artifactItem>
+                        <groupId>com.rt.bc</groupId>
+                        <artifactId>event-center-service</artifactId>
+                        <version>${project.version}</version>
+                        <type>jar</type>
+                        <overWrite>false</overWrite>
+                        <includes>mapping/*.*</includes>
+                        <outputDirectory>./target/classes</outputDirectory>
+                    </artifactItem>
+                </artifactItems>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
 ```
-
-增加interface extends EventMapper
 
