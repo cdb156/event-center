@@ -1,2 +1,5 @@
 maven-archiver
 annotation
+event-center-service/target
+event-center-interface/target
+event-center-consumer/target
