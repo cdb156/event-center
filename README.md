@@ -1,6 +1,6 @@
 # 一、项目介绍
 ## 1.项目目标
-一个基于Spring + Dubbo + Mybatis的简单的消息服务模块。
+一个基于Spring + Dubbo + Mybatis + Maven的简单的消息服务模块。
 如果自己的项目整体框架也是使用上面的基础框架, 又没有太复杂的需求, 可以使用这个模块, 嵌入到自己的项目, 简化整体结构
 
 ## 2.项目特点
@@ -34,8 +34,26 @@
 2) 消息发送
 
 3) 补充相关配置
-Dubbo配置
+Dubbo配置, 增加配置项:
+```
+<!--3.使用事件组件(发送和接收事件),需要增加的配置-->
+<dubbo:annotation package="com.rt.bc.eventcenter.consumer" service-group="${dubbo.service.group}"  reference-group="${dubbo.reference.group}" />
+<context:component-scan base-package="com.rt.bc.eventcenter.consumer"/>
+<!--这个貌似是个坑, broadcast的模式, 通过注解方式貌似无效, 使用这种配置方式才有效...-->
+<dubbo:service cluster="broadcast" interface="com.rt.bc.eventcenter.itf.IEventConsumerBus" ref="EventConsumerBusImpl"/>
+```
 
-Mybatis配置
+Mybatis配置, 增加配置项:
+```
+<!-- DAO接口所在包名，Mapper会自动查找其下的类并注入默认的mapper基类 -->
+<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="com.rt.bc.eventcenter.dao" />
+</bean>
+```
 
+Maven配置, 增加配置项(拷贝mapping.xml):
+```
+```
+
+增加interface extends EventMapper
 
