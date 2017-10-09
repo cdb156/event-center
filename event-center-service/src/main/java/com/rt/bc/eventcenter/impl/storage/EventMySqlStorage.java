@@ -1,7 +1,6 @@
 package com.rt.bc.eventcenter.impl.storage;
 
 import com.rt.bc.eventcenter.dao.EventMapper;
-import com.rt.bc.eventcenter.impl.oid.IOidProvider;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -19,16 +18,16 @@ public class EventMySqlStorage implements IEventStorage, InitializingBean {
     @Autowired
     private EventMapper eventMapper;
 
-    @Autowired
-    private IOidProvider oidProvider;
+//    @Autowired
+//    private IOidProvider oidProvider;
 
     @Override
     public EventInfo save(String eventName, String eventJson) {
-        Long id = oidProvider.generateNextId();
-        EventInfo eventInfo = new EventInfo(id, eventName, eventJson);
+//        Long id = oidProvider.generateNextId();
+        EventInfo eventInfo = new EventInfo(eventName, eventJson);
         eventMapper.insert(eventInfo);
 
-        return eventMapper.queryById(id);
+        return eventMapper.queryById(eventInfo.getId());
     }
 
     @Override

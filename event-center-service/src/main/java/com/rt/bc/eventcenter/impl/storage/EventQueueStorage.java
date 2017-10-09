@@ -2,12 +2,9 @@ package com.rt.bc.eventcenter.impl.storage;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.rt.bc.eventcenter.impl.oid.IOidProvider;
 import com.rt.bc.eventcenter.util.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -19,8 +16,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 @Component
 public class EventQueueStorage implements IEventStorage{
     private final static Logger logger = LoggerFactory.getLogger(EventQueueStorage.class);
-    @Autowired
-    private IOidProvider iOidProvider;
+//    @Autowired
+//    private IOidProvider iOidProvider;
 
     // 反馈信息的队列
     // 各个方法的含义,备忘:
@@ -45,8 +42,8 @@ public class EventQueueStorage implements IEventStorage{
             return null;
         }
 
-        Long id = iOidProvider.generateNextId();
-        EventInfo eventInfo = new EventInfo(id, eventName, event);
+//        Long id = iOidProvider.generateNextId();
+        EventInfo eventInfo = new EventInfo(eventName, event);
         if (!eventQueue.offer(eventInfo)){
             logger.warn("failed to offer a event to eventQueue");
             return null;

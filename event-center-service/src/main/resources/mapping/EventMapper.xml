@@ -4,8 +4,12 @@
 <mapper namespace="com.rt.bc.eventcenter.dao.EventMapper">
     <insert id="save" parameterType="com.rt.bc.eventcenter.impl.storage.EventInfo">
       insert into bc_message
+        (
+        `type`,
+        `content`,
+        `status`
+        )
         values(
-        #{eventInfo.id},
         #{eventInfo.eventType},
         #{eventInfo.eventJson},
         #{eventInfo.status}
@@ -28,7 +32,7 @@
 
     <insert id="createTable">
         create TABLE if not exists `bc_message`(
-        `id` bigint(15) NOT NULL COMMENT 'id',
+        `id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'id',
         `type` varchar(50) not NULL COMMENT '消息类型/名称',
         `content` text DEFAULT NULL COMMENT '消息内容',
         `status` SMALLINT UNSIGNED DEFAULT NULL COMMENT '消息状态，0——未发送；1——发送中；2——已发送',

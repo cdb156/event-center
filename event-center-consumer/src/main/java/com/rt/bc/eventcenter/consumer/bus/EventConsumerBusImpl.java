@@ -10,6 +10,7 @@ import com.rt.bc.eventcenter.util.EventNameUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,10 +35,15 @@ public class EventConsumerBusImpl implements IEventConsumerBus {
         Class cls = EventNameUtil.parseEventObjClass(eventName);
 
 //        List dataList = JsonUtil.parseArray(eventListJson, cls);
-        List dataList = eventListJson
-                .stream()
-                .map(eventJson -> JsonUtil.parseObject(eventJson, cls))
-                .collect(Collectors.toList());
+//        List<Object> dataList = eventListJson
+//                .stream()
+//                .map(eventJson -> JsonUtil.parseObject(eventJson, cls))
+//                .collect(Collectors.toList());
+
+        List<Object> dataList = new ArrayList<>();
+        for (String eventJson : eventListJson) {
+            dataList.add(JsonUtil.parseObject(eventJson, cls));
+        }
         List<IEventConsumer> consumerList = eventConsumerMgr.getConsumer(eventName);
         if (consumerList != null && !consumerList.isEmpty()) {
             for (IEventConsumer consumer : consumerList) {
