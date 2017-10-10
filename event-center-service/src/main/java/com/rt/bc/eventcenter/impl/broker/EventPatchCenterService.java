@@ -41,12 +41,12 @@ public class EventPatchCenterService implements IPatchCenterService {
         Map<String, List<EventInfo>> eventDtoMap = new HashMap<>();
 
         //1. 获取当前队列里, 所有消息
-        while (true) {
-            EventInfo eventInfo = eventStorage.poll(); // TODO: 批量获取
-            if (eventInfo == null) {
-                break;
-            }
+        List<EventInfo> eventInfoList = eventStorage.getNotSend();
+        if (eventInfoList == null || eventInfoList.isEmpty()) {
+            return;
+        }
 
+        for (EventInfo eventInfo : eventInfoList) {
             List<EventInfo> eventDtoList = eventDtoMap.get(eventInfo.getEventType());
             if (eventDtoList == null) {
                 eventDtoList = new ArrayList<>();

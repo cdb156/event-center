@@ -24,6 +24,10 @@
         SELECT * FROM bc_message where status = 0 order by id desc limit 1
     </select>
 
+    <select id="queryNotSend" resultType="com.rt.bc.eventcenter.vo.EventInfo">
+        SELECT * FROM bc_message where status = 0 order by id desc
+    </select>
+
     <update id="updateStatus">
       update bc_message
       set status = #{status}

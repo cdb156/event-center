@@ -14,5 +14,7 @@ public interface IEventStorage {
 
     boolean changeStatus(List<Long> eventIdList, Integer status);
 
-    EventInfo poll();
+//    EventInfo poll();
+
+    List<EventInfo> getNotSend();
 }

@@ -6,6 +6,7 @@ import com.rt.bc.eventcenter.vo.EventInfo;
 import com.rt.bc.eventcenter.util.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -32,11 +33,25 @@ public class EventQueueStorage implements IEventStorage{
     //    take      移除并返回队列头部的元素      如果队列为空，则阻塞
     private LinkedBlockingQueue<EventInfo> eventQueue = new LinkedBlockingQueue<>();
 
-    @Override
-    public EventInfo poll() {
-        return eventQueue.poll();
-    }
+//    @Override
+//    public EventInfo poll() {
+//        return eventQueue.poll();
+//    }
 
+    @Override
+    public List<EventInfo> getNotSend() {
+        List<EventInfo> ret = new ArrayList<>();
+        while (true) {
+            EventInfo eventInfo = eventQueue.poll();
+            if (eventInfo == null) {
+                break;
+            }
+
+            ret.add(eventInfo);
+        }
+
+        return ret;
+    }
     // 收取上报的反馈信息
     @Override
     public EventInfo save(String eventName, String event) {
@@ -59,4 +74,5 @@ public class EventQueueStorage implements IEventStorage{
         //在发送的时候, 已经出栈了, 所以不用做什么
         return true;
     }
+
 }

@@ -37,22 +37,27 @@ public class EventMysqlStorage implements IEventStorage, InitializingBean {
     }
 
     @Override
-    public EventInfo poll() {
-        EventInfo eventInfo = eventMapper.queryLast();
-        if (eventInfo == null) {
-            return null;
-        }
-        if (changeStatus(Collections.singletonList(eventInfo.getId()), EventInfo.STATUS_SENDED)) {
-            return eventInfo;
-        }
-
-        try {
-            throw new Exception("获取最新一条消息并更新消息状态异常");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public List<EventInfo> getNotSend() {
+        return eventMapper.queryNotSend();
     }
+
+//    @Override
+//    public EventInfo poll() {
+//        EventInfo eventInfo = eventMapper.queryLast();
+//        if (eventInfo == null) {
+//            return null;
+//        }
+//        if (changeStatus(Collections.singletonList(eventInfo.getId()), EventInfo.STATUS_SENDED)) {
+//            return eventInfo;
+//        }
+//
+//        try {
+//            throw new Exception("获取最新一条消息并更新消息状态异常");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     @Override
     public void afterPropertiesSet() throws Exception {

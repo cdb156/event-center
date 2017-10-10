@@ -20,4 +20,7 @@ public interface EventMapper {
     int createTable();
 
     EventInfo queryLast();
+
+    List<EventInfo> queryNotSend();
+
 }
