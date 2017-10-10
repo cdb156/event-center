@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
  * Created by shenxy on 10/10/17.
  *
  * 初始化消息中心的配置,并启动服务
+ * //TODO: 用户如何方便的使用配置:1)代码配置  2)XML配置
  */
 @Component
 public class EventCenterManager implements InitializingBean {
