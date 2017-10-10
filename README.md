@@ -12,6 +12,8 @@
 6、适应各种场景：服务进程内、跨服务进程消息、其他进程发送的不认识的消息（代码未引用）
 
 ## 3.后续待完善:
+### 0) 组件本身,去掉Spring的依赖(包括task配置)
+
 ### 1) 多种线程调度方式：
 1）线程池调度模式: io模式, compute模式
 2）当前线程回调
@@ -62,6 +64,11 @@ public class DemoServiceImpl implements IDemoService {
 3) 补充相关配置
 Dubbo配置, 增加配置项:
 ```
+<!--2.作为事件组件的分发服务中心,需要增加的配置-->
+<dubbo:annotation package="com.rt.bc.eventcenter.impl" service-group="${dubbo.service.group}"  reference-group="${dubbo.reference.group}" />
+<context:component-scan base-package="com.rt.bc.eventcenter.impl"/>
+
+
 <!--3.使用事件组件(发送和接收事件),需要增加的配置-->
 <dubbo:annotation package="com.rt.bc.eventcenter.consumer" service-group="${dubbo.service.group}"  reference-group="${dubbo.reference.group}" />
 <context:component-scan base-package="com.rt.bc.eventcenter.consumer"/>
@@ -105,5 +112,9 @@ Maven配置, 增加配置项(拷贝mapping.xml):
         </execution>
     </executions>
 </plugin>
+```
+
+Spring的定时任务配置:
+```
 ```
 
