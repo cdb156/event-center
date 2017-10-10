@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 连接事件服务中心的事件生产者总线, 接收不同事件, 转化成通用事件数据结构
  */
 public interface IEventProducerBus {
-    void postEvent(String eventName, String eventJson);
+    void postEvent(String eventName, String eventJson) throws Exception;
 
-    void postEventSync(String eventName, String eventJson);
+    void postEventSync(String eventName, String eventJson) throws Exception;
 }

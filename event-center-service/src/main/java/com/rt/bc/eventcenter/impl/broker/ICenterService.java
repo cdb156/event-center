@@ -5,6 +5,6 @@ package com.rt.bc.eventcenter.impl.broker;
  *
  * 事件处理服务的接口声明
  */
-public interface IImmediateCenterService extends ICenterService {
-
+public interface ICenterService {
+    void postEvent(String eventName, String eventJson) throws Exception;
 }

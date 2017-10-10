@@ -2,11 +2,12 @@ package com.rt.bc.eventcenter.impl.broker;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.rt.bc.eventcenter.constant.Constant;
 import com.rt.bc.eventcenter.impl.EventConsumer;
 import com.rt.bc.eventcenter.impl.deliveryGuarantee.IDeliveryGuarantee;
-import com.rt.bc.eventcenter.impl.storage.IEventStorage;
+import com.rt.bc.eventcenter.impl.mgr.EventCenterManager;
+import com.rt.bc.eventcenter.impl.mgr.ServiceContainer;
 import com.rt.bc.eventcenter.vo.EventInfo;
-import com.rt.bc.eventcenter.impl.storage.EventQueueStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -27,21 +28,19 @@ public class EventPatchCenterService implements IPatchCenterService {
     private final static Logger logger = LoggerFactory.getLogger(EventPatchCenterService.class);
 
     @Autowired
-    private IEventStorage eventStorage;
-
-    @Autowired
     private EventConsumer eventConsumer;
-
-    @Autowired
-    private IDeliveryGuarantee deliveryGuarantee;
 
     //处理接收反馈的逻辑, 默认半分钟执行一次.
     @Scheduled(initialDelay = 30000, fixedRate = 3000)    //(cron="60/3 * * * * ?")
-    public void eventProcessor() {
+    public void eventProcessor() throws Exception {
+        if (ServiceContainer.storage == null || ServiceContainer.guarantee == null) {
+            throw new Exception(Constant.NOT_INITED);
+        }
+
         Map<String, List<EventInfo>> eventDtoMap = new HashMap<>();
 
         //1. 获取当前队列里, 所有消息
-        List<EventInfo> eventInfoList = eventStorage.getNotSend();
+        List<EventInfo> eventInfoList = ServiceContainer.storage.getNotSend();
         if (eventInfoList == null || eventInfoList.isEmpty()) {
             return;
         }
@@ -70,18 +69,22 @@ public class EventPatchCenterService implements IPatchCenterService {
                     .map(EventInfo::getEventJson)
                     .collect(Collectors.toList());
             //2. 记录获取消息
-            deliveryGuarantee.preSend(eventIdList, eventJsonList);
+            ServiceContainer.guarantee.preSend(eventIdList, eventJsonList);
             //3. 发送消息
             eventConsumer.onBusEvent(eventType, eventJsonList);
             //4. 记录发送结果
-            deliveryGuarantee.afterSend(eventIdList, eventJsonList);
+            ServiceContainer.guarantee.afterSend(eventIdList, eventJsonList);
 
         }
     }
 
     @Override
-    public void postEvent(String eventName, String eventJson) {
+    public void postEvent(String eventName, String eventJson) throws Exception {
+        if (!EventCenterManager.isInited() || ServiceContainer.storage == null) {
+            throw new Exception("消息中心,尚未初始化");
+        }
+
         //保存消息到队列
-        eventStorage.save(eventName, eventJson);
+        ServiceContainer.storage.save(eventName, eventJson);
     }
 }

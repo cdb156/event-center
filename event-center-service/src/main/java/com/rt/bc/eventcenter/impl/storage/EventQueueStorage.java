@@ -15,7 +15,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  *
  * 事件队列管理
  */
-//@Component //TODO:
 public class EventQueueStorage implements IEventStorage{
     private final static Logger logger = LoggerFactory.getLogger(EventQueueStorage.class);
 //    @Autowired

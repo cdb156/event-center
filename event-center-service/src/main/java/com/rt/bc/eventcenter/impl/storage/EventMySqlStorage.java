@@ -14,7 +14,6 @@ import java.util.List;
  *
  * 使用mysql存储事件, 做持久化
  */
-@Component
 public class EventMysqlStorage implements IEventStorage, InitializingBean {
     @Autowired
     private EventMapper eventMapper;

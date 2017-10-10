@@ -1,5 +1,7 @@
 package com.rt.bc.eventcenter.impl.deliveryGuarantee;
 
+import com.rt.bc.eventcenter.constant.Constant;
+import com.rt.bc.eventcenter.impl.mgr.ServiceContainer;
 import com.rt.bc.eventcenter.vo.EventInfo;
 import com.rt.bc.eventcenter.impl.storage.IEventStorage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +14,15 @@ import java.util.List;
  *
  * 默认的消息送达策略 —— at most once
  */
-@Component
 public class AtMostOnceGuarantee implements IDeliveryGuarantee {
-    @Autowired
-    private IEventStorage eventStorage;
 
     @Override
-    public void preSend(List<Long> eventIdList, List<String> eventJsonList) {
-        eventStorage.changeStatus(eventIdList, EventInfo.STATUS_SENDED);
+    public void preSend(List<Long> eventIdList, List<String> eventJsonList) throws Exception {
+        if (ServiceContainer.storage == null) {
+            throw new Exception(Constant.NOT_INITED);
+        }
+
+        ServiceContainer.storage.changeStatus(eventIdList, EventInfo.STATUS_SENDED);
     }
 
     @Override

@@ -5,6 +5,6 @@ package com.rt.bc.eventcenter.impl.broker;
  *
  * 事件处理服务的接口声明
  */
-public interface IPatchCenterService {
-    void postEvent(String eventName, String eventJson);
+public interface IPatchCenterService extends ICenterService {
+
 }

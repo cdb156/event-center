@@ -1,7 +1,10 @@
 package com.rt.bc.eventcenter.impl.broker;
 
+import com.rt.bc.eventcenter.constant.Constant;
 import com.rt.bc.eventcenter.impl.EventConsumer;
 import com.rt.bc.eventcenter.impl.deliveryGuarantee.IDeliveryGuarantee;
+import com.rt.bc.eventcenter.impl.mgr.EventCenterManager;
+import com.rt.bc.eventcenter.impl.mgr.ServiceContainer;
 import com.rt.bc.eventcenter.vo.EventInfo;
 import com.rt.bc.eventcenter.impl.storage.IEventStorage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,24 +19,23 @@ import java.util.Collections;
  */
 @Component
 public class EventImmediateCenterService implements IImmediateCenterService {
-    @Autowired
-    private IEventStorage eventStorage;
 
     @Autowired
     private EventConsumer eventConsumer;
 
-    @Autowired
-    private IDeliveryGuarantee deliveryGuarantee;
-
     @Override
-    public void postEvent(String eventName, String eventJson) {
+    public void postEvent(String eventName, String eventJson) throws Exception {
+        if (!EventCenterManager.isInited() || ServiceContainer.storage == null || ServiceContainer.guarantee == null) {
+            throw new Exception(Constant.NOT_INITED);
+        }
+
         //1. 保存消息
-        EventInfo eventInfo = eventStorage.save(eventName, eventJson);
+        EventInfo eventInfo = ServiceContainer.storage.save(eventName, eventJson);
         //2. 记录获取消息
-        deliveryGuarantee.preSend(Collections.singletonList(eventInfo.getId()), Collections.singletonList(eventJson));
+        ServiceContainer.guarantee.preSend(Collections.singletonList(eventInfo.getId()), Collections.singletonList(eventJson));
         //3. 发送消息
         eventConsumer.onBusEvent(eventName, Collections.singletonList(eventJson));
         //4. 记录发送结果
-        deliveryGuarantee.afterSend(Collections.singletonList(eventInfo.getId()), Collections.singletonList(eventJson));
+        ServiceContainer.guarantee.afterSend(Collections.singletonList(eventInfo.getId()), Collections.singletonList(eventJson));
     }
 }

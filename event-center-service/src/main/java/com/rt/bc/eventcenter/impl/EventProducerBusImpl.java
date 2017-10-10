@@ -1,8 +1,11 @@
 package com.rt.bc.eventcenter.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.rt.bc.eventcenter.constant.Constant;
 import com.rt.bc.eventcenter.impl.broker.IImmediateCenterService;
 import com.rt.bc.eventcenter.impl.broker.IPatchCenterService;
+import com.rt.bc.eventcenter.impl.mgr.EventCenterManager;
+import com.rt.bc.eventcenter.impl.mgr.ServiceContainer;
 import com.rt.bc.eventcenter.itf.IEventProducerBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,19 +18,23 @@ import org.springframework.stereotype.Component;
 @Component
 @Service
 public class EventProducerBusImpl implements IEventProducerBus {
-    @Autowired
-    private IPatchCenterService patchCenterService;
 
     @Autowired
     private IImmediateCenterService immediateCenterService;
 
     @Override
-    public void postEvent(String eventName, String eventJson) {
-        patchCenterService.postEvent(eventName, eventJson);
+    public void postEvent(String eventName, String eventJson) throws Exception {
+        if (!EventCenterManager.isInited() || ServiceContainer.defaultCenterService == null) {
+            throw new Exception(Constant.NOT_INITED);
+        }
+
+        //该方法,根据初始化的配置来发送
+        ServiceContainer.defaultCenterService.postEvent(eventName, eventJson);
     }
 
     @Override
-    public void postEventSync(String eventName, String eventJson) {
+    public void postEventSync(String eventName, String eventJson) throws Exception {
+        //该方法,强制使用"即时上报"的方式来发送
         immediateCenterService.postEvent(eventName, eventJson);
     }
 }
