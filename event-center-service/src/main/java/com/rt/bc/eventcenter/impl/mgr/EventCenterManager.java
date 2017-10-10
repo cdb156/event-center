@@ -2,13 +2,8 @@ package com.rt.bc.eventcenter.impl.mgr;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.rt.bc.eventcenter.impl.broker.EventImmediateCenterService;
-import com.rt.bc.eventcenter.impl.broker.EventPatchCenterService;
-import com.rt.bc.eventcenter.impl.deliveryGuarantee.AtLeastOnceGuarantee;
-import com.rt.bc.eventcenter.impl.deliveryGuarantee.AtMostOnceGuarantee;
-import com.rt.bc.eventcenter.impl.storage.EventMysqlStorage;
-import com.rt.bc.eventcenter.impl.storage.EventQueueStorage;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,7 +15,9 @@ import org.springframework.stereotype.Component;
 public class EventCenterManager implements InitializingBean {
     private final static Logger logger = LoggerFactory.getLogger(EventCenterManager.class);
 
-    private static EventCenterConfigBuilder configBuilder = new EventCenterConfigBuilder();  //各个配置项
+    @Autowired
+    private EventCenterConfigBuilder tmp;  //各个配置项
+    private static EventCenterConfigBuilder configBuilder;  //各个配置项
 
     public static EventCenterConfigBuilder setGuaranteeModel(int guaranteeModel) {
         configBuilder.setGuarantee(guaranteeModel);
@@ -46,6 +43,7 @@ public class EventCenterManager implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        configBuilder = tmp;
         configBuilder.init();
     }
 }

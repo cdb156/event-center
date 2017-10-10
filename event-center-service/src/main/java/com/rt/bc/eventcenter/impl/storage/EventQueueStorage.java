@@ -2,6 +2,7 @@ package com.rt.bc.eventcenter.impl.storage;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
+import com.rt.bc.eventcenter.impl.BeanNames;
 import com.rt.bc.eventcenter.vo.EventInfo;
 import com.rt.bc.eventcenter.util.StringUtils;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  *
  * 事件队列管理
  */
+@Component(BeanNames.BEAN_MEM_STORAGE)
 public class EventQueueStorage implements IEventStorage{
     private final static Logger logger = LoggerFactory.getLogger(EventQueueStorage.class);
 //    @Autowired

@@ -32,7 +32,11 @@ public class EventProducer implements IEventProducer{
             return;
         }
 
-        eventProducerBus.postEvent(EventNameUtil.toEventName(eventType, eventBean), JsonUtil.toJSONString(eventBean));
+        try {
+            eventProducerBus.postEvent(EventNameUtil.toEventName(eventType, eventBean), JsonUtil.toJSONString(eventBean));
+        } catch (Exception e) {
+            logger.error("consumer EventProducer error:", e);
+        }
     }
 
     @Override
@@ -41,6 +45,10 @@ public class EventProducer implements IEventProducer{
             return;
         }
 
-        eventProducerBus.postEventSync(EventNameUtil.toEventName(eventType, eventBean), JsonUtil.toJSONString(eventBean));
+        try {
+            eventProducerBus.postEventSync(EventNameUtil.toEventName(eventType, eventBean), JsonUtil.toJSONString(eventBean));
+        } catch (Exception e) {
+            logger.error("consumer EventProducer error:", e);
+        }
     }
 }

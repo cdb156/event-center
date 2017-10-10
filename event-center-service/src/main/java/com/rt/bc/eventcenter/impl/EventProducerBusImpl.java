@@ -2,8 +2,7 @@ package com.rt.bc.eventcenter.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.rt.bc.eventcenter.constant.Constant;
-import com.rt.bc.eventcenter.impl.broker.IImmediateCenterService;
-import com.rt.bc.eventcenter.impl.broker.IPatchCenterService;
+import com.rt.bc.eventcenter.impl.broker.IImmediateBrokerService;
 import com.rt.bc.eventcenter.impl.mgr.EventCenterManager;
 import com.rt.bc.eventcenter.impl.mgr.ServiceContainer;
 import com.rt.bc.eventcenter.itf.IEventProducerBus;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class EventProducerBusImpl implements IEventProducerBus {
 
     @Autowired
-    private IImmediateCenterService immediateCenterService;
+    private IImmediateBrokerService immediateCenterService;
 
     @Override
     public void postEvent(String eventName, String eventJson) throws Exception {

@@ -1,6 +1,6 @@
 package com.rt.bc.eventcenter.impl.mgr;
 
-import com.rt.bc.eventcenter.impl.broker.ICenterService;
+import com.rt.bc.eventcenter.impl.broker.IBrokerService;
 import com.rt.bc.eventcenter.impl.deliveryGuarantee.IDeliveryGuarantee;
 import com.rt.bc.eventcenter.impl.storage.IEventStorage;
 
@@ -14,5 +14,5 @@ public class ServiceContainer {
 
     public static IEventStorage storage = null;
 
-    public static ICenterService defaultCenterService = null;
+    public static IBrokerService defaultCenterService = null;
 }

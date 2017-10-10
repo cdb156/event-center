@@ -1,6 +1,7 @@
 package com.rt.bc.eventcenter.impl.deliveryGuarantee;
 
 import com.rt.bc.eventcenter.constant.Constant;
+import com.rt.bc.eventcenter.impl.BeanNames;
 import com.rt.bc.eventcenter.impl.mgr.ServiceContainer;
 import com.rt.bc.eventcenter.vo.EventInfo;
 import com.rt.bc.eventcenter.impl.storage.IEventStorage;
@@ -14,6 +15,7 @@ import java.util.List;
  *
  * 默认的消息送达策略 —— at most once
  */
+@Component(BeanNames.BEAN_MOST_GUARANTEE)
 public class AtMostOnceGuarantee implements IDeliveryGuarantee {
 
     @Override

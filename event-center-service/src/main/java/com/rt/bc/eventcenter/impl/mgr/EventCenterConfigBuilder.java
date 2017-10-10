@@ -2,20 +2,24 @@ package com.rt.bc.eventcenter.impl.mgr;
 
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
-import com.rt.bc.eventcenter.impl.broker.EventImmediateCenterService;
-import com.rt.bc.eventcenter.impl.broker.EventPatchCenterService;
-import com.rt.bc.eventcenter.impl.deliveryGuarantee.AtLeastOnceGuarantee;
-import com.rt.bc.eventcenter.impl.deliveryGuarantee.AtMostOnceGuarantee;
-import com.rt.bc.eventcenter.impl.storage.EventMysqlStorage;
-import com.rt.bc.eventcenter.impl.storage.EventQueueStorage;
+import com.rt.bc.eventcenter.impl.BeanNames;
+import com.rt.bc.eventcenter.impl.broker.IBrokerService;
+import com.rt.bc.eventcenter.impl.deliveryGuarantee.IDeliveryGuarantee;
+import com.rt.bc.eventcenter.impl.storage.IEventStorage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by shenxy on 10/10/17.
  *
  * 各个初始化配置参数
  */
+@Component
 public class EventCenterConfigBuilder {
     private final static Logger logger = LoggerFactory.getLogger(EventCenterConfigBuilder.class);
+
+    @Autowired
+    private SpringContextHelper contextHelper;
 
     private boolean isInited;    //是否已经完成初始化
 
@@ -52,24 +56,25 @@ public class EventCenterConfigBuilder {
         }
 
         if (configBuilder.getGuarantee() == GUARANTEE_AT_LEAST_ONCE) {
-            ServiceContainer.guarantee = new AtLeastOnceGuarantee();
+            ServiceContainer.guarantee = (IDeliveryGuarantee) contextHelper.getBean(BeanNames.BEAN_LEAST_GUARANTEE);
+//            ServiceContainer.guarantee = new AtLeastOnceGuarantee();
         }
         else {
-            ServiceContainer.guarantee = new AtMostOnceGuarantee();
+            ServiceContainer.guarantee = (IDeliveryGuarantee) contextHelper.getBean(BeanNames.BEAN_MOST_GUARANTEE);// = new AtMostOnceGuarantee();
         }
 
         if (configBuilder.getStorage() == STORAGE_MEM) {
-            ServiceContainer.storage = new EventQueueStorage();
+            ServiceContainer.storage = (IEventStorage) contextHelper.getBean(BeanNames.BEAN_MEM_STORAGE);//new EventQueueStorage();
         }
         else {
-            ServiceContainer.storage = new EventMysqlStorage();
+            ServiceContainer.storage = (IEventStorage) contextHelper.getBean(BeanNames.BEAN_MYSQL_STORAGE);//new EventMysqlStorage();
         }
 
         if (configBuilder.getBroker() == BROKER_IMMEDIATE) {
-            ServiceContainer.defaultCenterService = new EventImmediateCenterService();
+            ServiceContainer.defaultCenterService = (IBrokerService) contextHelper.getBean(BeanNames.BEAN_IMMEDIATE_BROKER);//new EventImmediateCenterService();
         }
         else {
-            ServiceContainer.defaultCenterService = new EventPatchCenterService();
+            ServiceContainer.defaultCenterService = (IBrokerService) contextHelper.getBean(BeanNames.BEAN_PATCH_BROKER);//new EventPatchCenterService();
         }
     }
 

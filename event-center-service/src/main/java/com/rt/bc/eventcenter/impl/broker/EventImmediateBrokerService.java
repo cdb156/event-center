@@ -1,12 +1,11 @@
 package com.rt.bc.eventcenter.impl.broker;
 
 import com.rt.bc.eventcenter.constant.Constant;
+import com.rt.bc.eventcenter.impl.BeanNames;
 import com.rt.bc.eventcenter.impl.EventConsumer;
-import com.rt.bc.eventcenter.impl.deliveryGuarantee.IDeliveryGuarantee;
 import com.rt.bc.eventcenter.impl.mgr.EventCenterManager;
 import com.rt.bc.eventcenter.impl.mgr.ServiceContainer;
 import com.rt.bc.eventcenter.vo.EventInfo;
-import com.rt.bc.eventcenter.impl.storage.IEventStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +16,8 @@ import java.util.Collections;
  *
  * 用于实时处理事件的处理中心
  */
-@Component
-public class EventImmediateCenterService implements IImmediateCenterService {
+@Component(BeanNames.BEAN_IMMEDIATE_BROKER)
+public class EventImmediateBrokerService implements IImmediateBrokerService {
 
     @Autowired
     private EventConsumer eventConsumer;

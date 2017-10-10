@@ -3,8 +3,8 @@ package com.rt.bc.eventcenter.impl.broker;
 import com.alibaba.dubbo.common.logger.Logger;
 import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.rt.bc.eventcenter.constant.Constant;
+import com.rt.bc.eventcenter.impl.BeanNames;
 import com.rt.bc.eventcenter.impl.EventConsumer;
-import com.rt.bc.eventcenter.impl.deliveryGuarantee.IDeliveryGuarantee;
 import com.rt.bc.eventcenter.impl.mgr.EventCenterManager;
 import com.rt.bc.eventcenter.impl.mgr.ServiceContainer;
 import com.rt.bc.eventcenter.vo.EventInfo;
@@ -23,9 +23,9 @@ import java.util.stream.Collectors;
  * 批量处理未发送的事件, 相同对象放到List里, 批量抛出事件
  *
  */
-@Component
-public class EventPatchCenterService implements IPatchCenterService {
-    private final static Logger logger = LoggerFactory.getLogger(EventPatchCenterService.class);
+@Component(BeanNames.BEAN_PATCH_BROKER)
+public class EventPatchBrokerService implements IPatchBrokerService {
+    private final static Logger logger = LoggerFactory.getLogger(EventPatchBrokerService.class);
 
     @Autowired
     private EventConsumer eventConsumer;
