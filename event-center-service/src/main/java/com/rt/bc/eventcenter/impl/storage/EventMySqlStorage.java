@@ -6,8 +6,8 @@ import com.rt.bc.eventcenter.vo.EventInfo;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,12 +24,23 @@ public class EventMysqlStorage implements IEventStorage, InitializingBean {
 //    private IOidProvider oidProvider;
 
     @Override
+    @Transactional
     public EventInfo save(String eventName, String eventJson) {
 //        Long id = oidProvider.generateNextId();
         EventInfo eventInfo = new EventInfo(eventName, eventJson);
         eventMapper.insert(eventInfo);
 
+        testTransactionManualException();
         return eventMapper.queryById(eventInfo.getId());
+    }
+
+    //为了测试跨service的分布式事务的人为异常
+    private static Integer i = 0;
+    private void testTransactionManualException() {
+        eventMapper.insert(new EventInfo("eventcenter", "eventcenter" + i++));
+
+        String a = null;
+        a.toString();
     }
 
     @Override

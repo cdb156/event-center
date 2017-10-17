@@ -14,5 +14,5 @@ public class ServiceContainer {
 
     public static IEventStorage storage = null;
 
-    public static IBrokerService defaultCenterService = null;
+    public static IBrokerService defaultBrokerService = null;
 }

@@ -71,10 +71,10 @@ public class EventCenterConfigBuilder {
         }
 
         if (configBuilder.getBroker() == BROKER_IMMEDIATE) {
-            ServiceContainer.defaultCenterService = (IBrokerService) contextHelper.getBean(BeanNames.BEAN_IMMEDIATE_BROKER);//new EventImmediateCenterService();
+            ServiceContainer.defaultBrokerService = (IBrokerService) contextHelper.getBean(BeanNames.BEAN_IMMEDIATE_BROKER);//new EventImmediateCenterService();
         }
         else {
-            ServiceContainer.defaultCenterService = (IBrokerService) contextHelper.getBean(BeanNames.BEAN_PATCH_BROKER);//new EventPatchCenterService();
+            ServiceContainer.defaultBrokerService = (IBrokerService) contextHelper.getBean(BeanNames.BEAN_PATCH_BROKER);//new EventPatchCenterService();
         }
     }
 

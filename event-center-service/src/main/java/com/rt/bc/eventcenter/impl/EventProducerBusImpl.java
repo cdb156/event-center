@@ -23,12 +23,12 @@ public class EventProducerBusImpl implements IEventProducerBus {
 
     @Override
     public void postEvent(String eventName, String eventJson) throws Exception {
-        if (!EventCenterManager.isInited() || ServiceContainer.defaultCenterService == null) {
+        if (!EventCenterManager.isInited() || ServiceContainer.defaultBrokerService == null) {
             throw new Exception(Constant.NOT_INITED);
         }
 
         //该方法,根据初始化的配置来发送
-        ServiceContainer.defaultCenterService.postEvent(eventName, eventJson);
+        ServiceContainer.defaultBrokerService.postEvent(eventName, eventJson);
     }
 
     @Override
