@@ -30,18 +30,18 @@ public class EventMysqlStorage implements IEventStorage, InitializingBean {
         EventInfo eventInfo = new EventInfo(eventName, eventJson);
         eventMapper.insert(eventInfo);
 
-        testTransactionManualException();
+//        testTransactionManualException();
         return eventMapper.queryById(eventInfo.getId());
     }
 
     //为了测试跨service的分布式事务的人为异常
-    private static Integer i = 0;
-    private void testTransactionManualException() {
-        eventMapper.insert(new EventInfo("eventcenter", "eventcenter" + i++));
-
+//    private static Integer i = 0;
+//    private void testTransactionManualException() {
+//        eventMapper.insert(new EventInfo("eventcenter", "eventcenter" + i++));
+//
 //        String a = null;
 //        a.toString();
-    }
+//    }
 
     @Override
     public boolean changeStatus(List<Long> eventIdList, Integer status) {
