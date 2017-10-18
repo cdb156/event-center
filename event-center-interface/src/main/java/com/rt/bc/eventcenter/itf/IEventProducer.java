@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 事件生产者的接口
  */
 public interface IEventProducer {
-    void postEvent(String eventType, Serializable eventBean);
+    void postEvent(String eventType, Serializable eventBean) throws Exception;
 
-    void postEventSync(String eventType, Serializable eventBean);
+    void postEventSync(String eventType, Serializable eventBean) throws Exception;
 }

@@ -39,8 +39,8 @@ public class EventMysqlStorage implements IEventStorage, InitializingBean {
     private void testTransactionManualException() {
         eventMapper.insert(new EventInfo("eventcenter", "eventcenter" + i++));
 
-        String a = null;
-        a.toString();
+//        String a = null;
+//        a.toString();
     }
 
     @Override

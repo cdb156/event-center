@@ -27,28 +27,28 @@ public class EventProducer implements IEventProducer{
 
     // 收取上报的反馈信息
     @Override
-    public void postEvent(String eventType, Serializable eventBean) {
+    public void postEvent(String eventType, Serializable eventBean) throws Exception {
         if (eventBean == null && StringUtils.isEmpty(eventType)) {
             return;
         }
 
-        try {
+//        try {
             eventProducerBus.postEvent(EventNameUtil.toEventName(eventType, eventBean), JsonUtil.toJSONString(eventBean));
-        } catch (Exception e) {
-            logger.error("consumer EventProducer error:", e);
-        }
+//        } catch (Exception e) {
+//            logger.error("consumer EventProducer error:", e);
+//        }
     }
 
     @Override
-    public void postEventSync(String eventType, Serializable eventBean) {
+    public void postEventSync(String eventType, Serializable eventBean) throws Exception {
         if (eventBean == null && StringUtils.isEmpty(eventType)) {
             return;
         }
 
-        try {
+//        try {
             eventProducerBus.postEventSync(EventNameUtil.toEventName(eventType, eventBean), JsonUtil.toJSONString(eventBean));
-        } catch (Exception e) {
-            logger.error("consumer EventProducer error:", e);
-        }
+//        } catch (Exception e) {
+//            logger.error("consumer EventProducer error:", e);
+//        }
     }
 }
