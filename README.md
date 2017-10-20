@@ -65,22 +65,22 @@ public class DemoServiceImpl implements IDemoService {
 Dubbo配置, 增加配置项:
 ```
 <!--2.作为事件组件的分发服务中心,需要增加的配置-->
-<dubbo:annotation package="com.rt.bc.eventcenter.impl" service-group="${dubbo.service.group}"  reference-group="${dubbo.reference.group}" />
-<context:component-scan base-package="com.rt.bc.eventcenter.impl"/>
+<dubbo:annotation package="com.github.outerman.eventcenter.impl" service-group="${dubbo.service.group}"  reference-group="${dubbo.reference.group}" />
+<context:component-scan base-package="com.github.outerman.eventcenter.impl"/>
 
 
 <!--3.使用事件组件(发送和接收事件),需要增加的配置-->
-<dubbo:annotation package="com.rt.bc.eventcenter.consumer" service-group="${dubbo.service.group}"  reference-group="${dubbo.reference.group}" />
-<context:component-scan base-package="com.rt.bc.eventcenter.consumer"/>
+<dubbo:annotation package="com.github.outerman.eventcenter.consumer" service-group="${dubbo.service.group}"  reference-group="${dubbo.reference.group}" />
+<context:component-scan base-package="com.github.outerman.eventcenter.consumer"/>
 <!--这个貌似是个坑, broadcast的模式, 通过注解方式貌似无效, 使用这种配置方式才有效...-->
-<dubbo:service cluster="broadcast" interface="com.rt.bc.eventcenter.itf.IEventConsumerBus" ref="EventConsumerBusImpl"/>
+<dubbo:service cluster="broadcast" interface="com.github.outerman.eventcenter.itf.IEventConsumerBus" ref="EventConsumerBusImpl"/>
 ```
 
 Mybatis配置, 增加配置项:
 ```
 <!-- DAO接口所在包名，Mapper会自动查找其下的类并注入默认的mapper基类 -->
 <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
-    <property name="basePackage" value="com.rt.bc.eventcenter.dao" />
+    <property name="basePackage" value="com.github.outerman.eventcenter.dao" />
 </bean>
 ```
 
@@ -99,7 +99,7 @@ Maven配置, 增加配置项(拷贝mapping.xml):
             <configuration>
                 <artifactItems>
                     <artifactItem>
-                        <groupId>com.rt.bc</groupId>
+                        <groupId>com.github.outerman</groupId>
                         <artifactId>event-center-service</artifactId>
                         <version>${project.version}</version>
                         <type>jar</type>

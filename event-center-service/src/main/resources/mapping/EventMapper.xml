@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.rt.bc.eventcenter.dao.EventMapper">
-    <insert id="insert" parameterType="com.rt.bc.eventcenter.vo.EventInfo">
+<mapper namespace="com.github.outerman.eventcenter.dao.EventMapper">
+    <insert id="insert" parameterType="com.github.outerman.eventcenter.vo.EventInfo">
       insert into bc_message
         (
         `type`,
@@ -16,15 +16,15 @@
         )
     </insert>
 
-    <select id="queryById" parameterType="Long" resultType="com.rt.bc.eventcenter.vo.EventInfo">
+    <select id="queryById" parameterType="Long" resultType="com.github.outerman.eventcenter.vo.EventInfo">
       select * from bc_message where id = #{id}
     </select>
 
-    <select id="queryLast" resultType="com.rt.bc.eventcenter.vo.EventInfo">
+    <select id="queryLast" resultType="com.github.outerman.eventcenter.vo.EventInfo">
         SELECT * FROM bc_message where status = 0 order by id desc limit 1
     </select>
 
-    <select id="queryNotSend" resultType="com.rt.bc.eventcenter.vo.EventInfo">
+    <select id="queryNotSend" resultType="com.github.outerman.eventcenter.vo.EventInfo">
         SELECT * FROM bc_message where status = 0 order by id desc
     </select>
 
